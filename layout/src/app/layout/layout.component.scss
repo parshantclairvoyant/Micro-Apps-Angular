@@ -1,0 +1,27 @@
+.header {
+    background-color: #ccc;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    layout-header{
+        display: flex;
+        justify-content: space-between;  
+        align-items: center;
+    }
+}
+.content-wrapper {
+    margin-top: 48px;
+    layout-side-nav {
+        position: fixed;
+        left: 0;
+        width: 200px;
+        padding: 10px;
+        // height: calc(100vh - 70px);
+        background-color: #eee;
+        overflow-y: auto;
+        bottom: 0;
+        top: 48px;
+    }
+}
