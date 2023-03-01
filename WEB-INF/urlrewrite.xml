@@ -1,0 +1,10 @@
+<urlrewrite>
+	<rule>
+		<from>^/app/index.html$</from>
+		<to type="redirect" last="true">/</to>
+	</rule>
+	<rule>
+		<from>^/app/</from>
+		<to type="redirect" last="true">/</to>
+	</rule>
+</urlrewrite>
