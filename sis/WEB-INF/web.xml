@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee" version="2.5">
+
+	<!-- jul-to-slf4j -->
+	<!-- <listener>
+		<listener-class>edu.gcu.listener.SLF4JBridgeListener</listener-class>
+	</listener> -->
+
+	<!-- Spring context -->
+    <context-param>
+        <param-name>DOMAIN</param-name>
+        <param-value>micro-sis-web</param-value>
+    </context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext-security.xml,classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+
+	<!-- <listener>
+		<listener-class>edu.gcu.jmx.JmxInitContextListener</listener-class>
+	</listener> -->
+
+	<!-- <context-param>
+		<param-name>ENABLE_JMX</param-name>
+		<param-value>true</param-value>
+	</context-param> -->
+	<!-- CORS filter for enabling cross domain requests -->
+	<filter>
+		<filter-name>tokensecuritycheckfilter</filter-name>
+		<filter-class>edu.gcu.ssoclient.filter.LopesWebSecurityTokenCheckFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>tokensecuritycheckfilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Apply Spring Security Filter to all Requests --> 
+	<filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+	<filter>
+		<filter-name>Request Context Filter</filter-name>
+		<filter-class>edu.gcu.filter.RequestContextFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Request Context Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<description>Set cache expiry for static content</description>
+		<filter-name>ExpiresFilter</filter-name>
+		<filter-class>edu.gcu.filter.CacheFilter</filter-class>
+		<init-param>
+			<param-name>Seconds</param-name>
+			<param-value>43200</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ExpiresFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ExpiresFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ExpiresFilter</filter-name>
+		<url-pattern>*.png</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>	
+
+</web-app>
